@@ -1,9 +1,11 @@
 package com.devsuperior.dsmeta.services;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import com.devsuperior.dsmeta.dto.ReportDTO;
+import com.devsuperior.dsmeta.dto.SummaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +35,12 @@ public class SaleService {
 			String name,
 			Pageable pageable
 	) {
-		System.out.println(name);
 		return repository.searchReportWithParams(minDate, maxDate, name, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public List<SummaryDTO> findAllSummary(LocalDate minDate, LocalDate maxDate) {
+		return repository.searchSummary(minDate, maxDate);
 	}
 
 	private SaleMinDTO toSaleMinDTO(Sale entity) {
